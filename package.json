@@ -1,22 +1,22 @@
 {
-  "name": "htmlcoin-api",
-  "description": "A HTMLCOIN blockchain REST and web socket API service for HTMLCOINCORE Node.",
+  "name": "vipstarcoin-api",
+  "description": "A VIPSTARCOIN blockchain REST and web socket API service for VIPSTARCOINCORE Node.",
   "version": "0.0.17",
-  "repository": "https://github.com/HTMLCOIN/htmlcoin-api.git",
+  "repository": "https://github.com/fkfk/vipstarcoin-api.git",
   "contributors": [],
   "bugs": {
-    "url": "https://github.com/HTMLCOIN/htmlcoin-api/issues"
+    "url": "https://github.com/fkfk/vipstarcoin-api/issues"
   },
-  "homepage": "https://github.com/HTMLCOIN/htmlcoin-api",
+  "homepage": "https://github.com/fkfk/vipstarcoin-api",
   "license": "MIT",
   "keywords": [
     "insight",
     "insight api",
     "blockchain",
-    "htmlcoin api",
+    "vipstarcoin api",
     "blockchain api",
     "json",
-    "htmlcoincore"
+    "vipstarcoincore"
   ],
   "engines": {
     "node": ">=0.12.0"
@@ -25,7 +25,7 @@
     "test": "NODE_ENV=test mocha -R spec --recursive"
   },
   "main": "lib",
-  "htmlcoincoreNode": "lib",
+  "vipstarcoincoreNode": "lib",
   "dependencies": {
     "async": "*",
     "bignumber.js": "^4.0.2",
@@ -38,7 +38,7 @@
     "moment": "^2.19.3",
     "mongoose": "^4.11.8",
     "morgan": "^1.7.0",
-    "htmlcoin-lib": "git://github.com/HTMLCOIN/htmlcoin-lib.git#master",
+    "vipstarcoin-lib": "git://github.com/fkfk/vipstarcoin-lib.git#master",
     "request": "^2.83.0",
     "web3": "^0.18.4"
   },

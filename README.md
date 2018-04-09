@@ -21,33 +21,33 @@
 * [Stake](#stake-statistic)
 * [Total Supply](#total-supply-statistic)
 
-A HTMLCOIN blockchain REST and web socket API service for [HTMLCOINCORE Node](https://github.com/HTMLCOIN/htmlcoincore-node).
+A VIPSTARCOIN blockchain REST and web socket API service for [VIPSTARCOINCORE Node](https://github.com/fkfk/vipstarcoincore-node).
 
-This is a backend-only service. If you're looking for the web frontend application, take a look at https://github.com/HTMLCOIN/htmlcoin-explorer.
+This is a backend-only service. If you're looking for the web frontend application, take a look at https://github.com/fkfk/vipstarcoin-explorer.
 
 ## Getting Started
 
 ```bashl
-npm install -g htmlcoincore-node@latest
-htmlcoincore-node create mynode
+npm install -g vipstarcoincore-node@latest
+vipstarcoincore-node create mynode
 cd mynode
-htmlcoincore-node install htmlcoin-api
-htmlcoincore-node start
+vipstarcoincore-node install vipstarcoin-api
+vipstarcoincore-node start
 ```
 
-The API endpoints will be available by default at: `http://localhost:3001/htmlcoin-api/`
+The API endpoints will be available by default at: `http://localhost:3001/vipstarcoin-api/`
 
 ## Prerequisites
 
-**Note:** You can use an existing HTMLCOIN data directory, however `txindex`, `addressindex`, `timestampindex` and `spentindex` needs to be set to true in `htmlcoin.conf`, as well as a few other additional fields.
+**Note:** You can use an existing VIPSTARCOIN data directory, however `txindex`, `addressindex`, `timestampindex` and `spentindex` needs to be set to true in `vipstarcoin.conf`, as well as a few other additional fields.
 
 
 ## Query Rate Limit
 
-To protect the server, htmlcoin-api has a built it query rate limiter. It can be configurable in `htmlcoincore-node.json` with:
+To protect the server, vipstarcoin-api has a built it query rate limiter. It can be configurable in `vipstarcoincore-node.json` with:
 ``` json
   "servicesConfig": {
-    "htmlcoin-api": {
+    "vipstarcoin-api": {
       "rateLimiterOptions": {
         "whitelist": ["::ffff:127.0.0.1"]
       }
@@ -58,7 +58,7 @@ To protect the server, htmlcoin-api has a built it query rate limiter. It can be
 Or disabled entirely with:
 ``` json
   "servicesConfig": {
-    "htmlcoin-api": {
+    "vipstarcoin-api": {
       "disableRateLimiter": true
     }
   }
@@ -70,11 +70,11 @@ Or disabled entirely with:
 ### Token Account Balance
 
 ```
-  `GET` /htmlcoin-api/tokens/{:tokenAddressBase}/addresses/{:addressBase}/balance
+  `GET` /vipstarcoin-api/tokens/{:tokenAddressBase}/addresses/{:addressBase}/balance
 ```
 or
 ```
-  `GET` /htmlcoin-api/tokens/{:tokenAddressBase}/addresses/{:addressBase}/balance?format=object
+  `GET` /vipstarcoin-api/tokens/{:tokenAddressBase}/addresses/{:addressBase}/balance?format=object
 ```
 
 * **Query Params**
@@ -99,11 +99,11 @@ This would return:
 
 ### Token Total supply
 ```
-    `GET` /htmlcoin-api/tokens/{:tokenAddressBase}/total-supply
+    `GET` /vipstarcoin-api/tokens/{:tokenAddressBase}/total-supply
 ```
 or
 ```
-  `GET` /htmlcoin-api/tokens/{:tokenAddressBase}/total-supply?format=object
+  `GET` /vipstarcoin-api/tokens/{:tokenAddressBase}/total-supply?format=object
 ```
 
 * **Query Params**
@@ -127,7 +127,7 @@ or
 ### Token Transactions
 
 ```
-  `GET` /htmlcoin-api/tokens/{:tokenAddressBase}/transactions
+  `GET` /vipstarcoin-api/tokens/{:tokenAddressBase}/transactions
 ```
 
 * **Query Params**
@@ -152,7 +152,7 @@ or
 
 Eg:
 ```
-  `GET` /htmlcoin-api/tokens/QNdW79juyJNJ89h99D9vfo5QhCZpmavJNX/transactions?limit=20&offset=1&from_block=34101&to_block=34378&from_date_time=2017-10-27T01:23:10.000Z&to_date_time=2018-10-27T01:24:10.000Z&addresses[]=QbmrFnBhyMKUhrabXfaAWZTncSWbJA8FsG&addresses[]=QarHW2HjV8Z3njxiTuvUZU3hmqahKNZ49y
+  `GET` /vipstarcoin-api/tokens/QNdW79juyJNJ89h99D9vfo5QhCZpmavJNX/transactions?limit=20&offset=1&from_block=34101&to_block=34378&from_date_time=2017-10-27T01:23:10.000Z&to_date_time=2018-10-27T01:24:10.000Z&addresses[]=QbmrFnBhyMKUhrabXfaAWZTncSWbJA8FsG&addresses[]=QarHW2HjV8Z3njxiTuvUZU3hmqahKNZ49y
 ```
 
 This would return:
@@ -189,7 +189,7 @@ This would return:
 
 ### Account Info
 ```
-  `GET` /htmlcoin-api/contracts/{:contractHash}/info
+  `GET` /vipstarcoin-api/contracts/{:contractHash}/info
 ```
 This would return:
 ```
@@ -219,7 +219,7 @@ This would return:
 
 ### Total 24h Statistic
 ```
-  `GET` /htmlcoin-api/statistics/total
+  `GET` /vipstarcoin-api/statistics/total
 ```
 This would return:
 ```
@@ -236,7 +236,7 @@ This would return:
 ```
 ### Transactions Statistic
 ```
-  `GET` /htmlcoin-api/statistics/transactions?days=14
+  `GET` /vipstarcoin-api/statistics/transactions?days=14
 ```
 This would return:
 ```
@@ -252,7 +252,7 @@ This would return:
 
 ### Fees Statistic
 ```
-  `GET` /htmlcoin-api/statistics/fees?days=14
+  `GET` /vipstarcoin-api/statistics/fees?days=14
 ```
 This would return:
 ```
@@ -266,7 +266,7 @@ This would return:
 ```
 ### Outputs Statistic
 ```
-  `GET` /htmlcoin-api/statistics/outputs?days=14
+  `GET` /vipstarcoin-api/statistics/outputs?days=14
 ```
 This would return:
 ```
@@ -280,7 +280,7 @@ This would return:
 ```
 ### Difficulty Statistic
 ```
-  `GET` /htmlcoin-api/statistics/difficulty?days=14
+  `GET` /vipstarcoin-api/statistics/difficulty?days=14
 ```
 This would return:
 ```
@@ -294,7 +294,7 @@ This would return:
 ```
 ### Stake Statistic
 ```
-  `GET` /htmlcoin-api/statistics/stake?days=14
+  `GET` /vipstarcoin-api/statistics/stake?days=14
 ```
 This would return:
 ```
@@ -310,11 +310,11 @@ This would return:
 ### Total Supply Statistic
 
 ```
-  `GET` /htmlcoin-api/supply
+  `GET` /vipstarcoin-api/supply
 ```
 or
 ```
-  `GET` /htmlcoin-api/supply?format=object
+  `GET` /vipstarcoin-api/supply?format=object
 ```
 This would return:
 ```
@@ -329,15 +329,15 @@ or
 
 ### Block
 ```
-  /htmlcoin-api/block/[:hash]
-  /htmlcoin-api/block/00000000a967199a2fad0877433c93df785a8d8ce062e5f9b451cd1397bdbf62
+  /vipstarcoin-api/block/[:hash]
+  /vipstarcoin-api/block/00000000a967199a2fad0877433c93df785a8d8ce062e5f9b451cd1397bdbf62
 ```
 
 ### Block Index
 Get block hash by height
 ```
-  /htmlcoin-api/block-index/[:height]
-  /htmlcoin-api/block-index/0
+  /vipstarcoin-api/block-index/[:height]
+  /vipstarcoin-api/block-index/0
 ```
 This would return:
 ```
@@ -350,8 +350,8 @@ which is the hash of the Genesis block (0 height)
 
 ### Raw Block
 ```
-  /htmlcoin-api/rawblock/[:blockHash]
-  /htmlcoin-api/rawblock/[:blockHeight]
+  /vipstarcoin-api/rawblock/[:blockHash]
+  /vipstarcoin-api/rawblock/[:blockHeight]
 ```
 
 This would return:
@@ -365,7 +365,7 @@ This would return:
 
 Get block summaries by date:
 ```
-  /htmlcoin-api/blocks?limit=3&blockDate=2016-04-22
+  /vipstarcoin-api/blocks?limit=3&blockDate=2016-04-22
 ```
 
 Example response:
@@ -399,31 +399,31 @@ Example response:
 
 ### Transaction
 ```
-  /htmlcoin-api/tx/[:txid]
-  /htmlcoin-api/tx/525de308971eabd941b139f46c7198b5af9479325c2395db7f2fb5ae8562556c
-  /htmlcoin-api/rawtx/[:rawid]
-  /htmlcoin-api/rawtx/525de308971eabd941b139f46c7198b5af9479325c2395db7f2fb5ae8562556c
+  /vipstarcoin-api/tx/[:txid]
+  /vipstarcoin-api/tx/525de308971eabd941b139f46c7198b5af9479325c2395db7f2fb5ae8562556c
+  /vipstarcoin-api/rawtx/[:rawid]
+  /vipstarcoin-api/rawtx/525de308971eabd941b139f46c7198b5af9479325c2395db7f2fb5ae8562556c
 ```
 
 ### Address
 ```
-  /htmlcoin-api/addr/[:addr][?noTxList=1][&from=&to=]
-  /htmlcoin-api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?noTxList=1
-  /htmlcoin-api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?from=1000&to=2000
+  /vipstarcoin-api/addr/[:addr][?noTxList=1][&from=&to=]
+  /vipstarcoin-api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?noTxList=1
+  /vipstarcoin-api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?from=1000&to=2000
 ```
 
 ### Address Properties
 ```
-  /htmlcoin-api/addr/[:addr]/balance
-  /htmlcoin-api/addr/[:addr]/totalReceived
-  /htmlcoin-api/addr/[:addr]/totalSent
-  /htmlcoin-api/addr/[:addr]/unconfirmedBalance
+  /vipstarcoin-api/addr/[:addr]/balance
+  /vipstarcoin-api/addr/[:addr]/totalReceived
+  /vipstarcoin-api/addr/[:addr]/totalSent
+  /vipstarcoin-api/addr/[:addr]/unconfirmedBalance
 ```
 The response contains the value in Satoshis.
 
 ### Unspent Outputs
 ```
-  /htmlcoin-api/addr/[:addr]/utxo
+  /vipstarcoin-api/addr/[:addr]/utxo
 ```
 Sample return:
 ```
@@ -454,13 +454,13 @@ Sample return:
 ### Unspent Outputs for Multiple Addresses
 GET method:
 ```
-  /htmlcoin-api/addrs/[:addrs]/utxo
-  /htmlcoin-api/addrs/2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f/utxo
+  /vipstarcoin-api/addrs/[:addrs]/utxo
+  /vipstarcoin-api/addrs/2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f/utxo
 ```
 
 POST method:
 ```
-  /htmlcoin-api/addrs/utxo
+  /vipstarcoin-api/addrs/utxo
 ```
 
 POST params:
@@ -470,30 +470,30 @@ addrs: 2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f
 
 ### Transactions by Block
 ```
-  /htmlcoin-api/txs/?block=HASH
-  /htmlcoin-api/txs/?block=00000000fa6cf7367e50ad14eb0ca4737131f256fc4c5841fd3c3f140140e6b6
+  /vipstarcoin-api/txs/?block=HASH
+  /vipstarcoin-api/txs/?block=00000000fa6cf7367e50ad14eb0ca4737131f256fc4c5841fd3c3f140140e6b6
 ```
 ### Transactions by Address
 ```
-  /htmlcoin-api/txs/?address=ADDR
-  /htmlcoin-api/txs/?address=mmhmMNfBiZZ37g1tgg2t8DDbNoEdqKVxAL
+  /vipstarcoin-api/txs/?address=ADDR
+  /vipstarcoin-api/txs/?address=mmhmMNfBiZZ37g1tgg2t8DDbNoEdqKVxAL
 ```
 
 ### Transactions Receipt
 ```
-  /htmlcoin-api/txs/[:tx_id]/receipt
+  /vipstarcoin-api/txs/[:tx_id]/receipt
 ```
 
 ### Transactions for Multiple Addresses
 GET method:
 ```
-  /htmlcoin-api/addrs/[:addrs]/txs[?from=&to=]
-  /htmlcoin-api/addrs/2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f/txs?from=0&to=20
+  /vipstarcoin-api/addrs/[:addrs]/txs[?from=&to=]
+  /vipstarcoin-api/addrs/2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f/txs?from=0&to=20
 ```
 
 POST method:
 ```
-  /htmlcoin-api/addrs/txs
+  /vipstarcoin-api/addrs/txs
 ```
 
 POST params:
@@ -541,7 +541,7 @@ Note: if pagination params are not specified, the result is an array of transact
 ### Transaction Broadcasting
 POST method:
 ```
-  /htmlcoin-api/tx/send
+  /vipstarcoin-api/tx/send
 ```
 POST params:
 ```
@@ -567,22 +567,22 @@ POST response:
 
 ### Historic Blockchain Data Sync Status
 ```
-  /htmlcoin-api/sync
+  /vipstarcoin-api/sync
 ```
 
 ### Live Network P2P Data Sync Status
 ```
-  /htmlcoin-api/peer
+  /vipstarcoin-api/peer
 ```
 
-### Status of the HTMLCOIN Network
+### Status of the VIPSTARCOIN Network
 ```
-  /htmlcoin-api/status?q=xxx
+  /vipstarcoin-api/status?q=xxx
 ```
 
 ### DGP info
 ```
-  /htmlcoin-api/dgpinfo
+  /vipstarcoin-api/dgpinfo
 ```
 
 Where "xxx" can be:
@@ -595,12 +595,12 @@ Where "xxx" can be:
 
 ### Utility Methods
 ```
-  /htmlcoin-api/utils/estimatefee[?nbBlocks=2]
+  /vipstarcoin-api/utils/estimatefee[?nbBlocks=2]
 ```
 
 ### Min Estimate Fee Per KB
 ```
-  /htmlcoin-api/utils/minestimatefee[?nbBlocks=2]
+  /vipstarcoin-api/utils/minestimatefee[?nbBlocks=2]
 ```
 
 resp:
@@ -613,22 +613,22 @@ resp:
 
 ### QRC20 info
 ```
-  /htmlcoin-api/erc20/:contractAddress
+  /vipstarcoin-api/erc20/:contractAddress
 ```
 
 ### QRC20 transfers
 ```
-  /htmlcoin-api/erc20/:contractAddress/transfers
+  /vipstarcoin-api/erc20/:contractAddress/transfers
 ```
 
 ### QRC20 balances
 ```
-  /htmlcoin-api/erc20/:contractAddress/balances
+  /vipstarcoin-api/erc20/:contractAddress/balances
 ```
 
 ### Call Contract
 ```
-/htmlcoin-api/contracts/:contractaddress/hash/:contracthash/call
+/vipstarcoin-api/contracts/:contractaddress/hash/:contracthash/call
 ```
 
 ## Web Socket API

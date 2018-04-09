@@ -29,7 +29,7 @@ util.inherits(MarketsService, EventEmitter);
 MarketsService.prototype._updateInfo = function() {
     var self = this;
     return request.get({
-        url: 'https://api.coinmarketcap.com/v1/ticker/html-coin/',
+        url: 'https://api.coinmarketcap.com/v1/ticker/vipstar-coin/',
         json: true
     }, function (err, response, body) {
 

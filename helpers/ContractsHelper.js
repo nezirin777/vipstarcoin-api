@@ -1,4 +1,4 @@
-var bitcore = require('htmlcoin-lib');
+var bitcore = require('vipstarcoin-lib');
 var functionHashes = require("../data/contracts/erc20/FunctionHashes.json");
 var CONTRACT_CALL = 194;
 var CONTRACT_CREATE = 193;

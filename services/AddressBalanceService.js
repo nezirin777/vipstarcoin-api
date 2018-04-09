@@ -278,7 +278,7 @@ AddressBalanceService.prototype.start = function (next) {
 
         self._rapidProtectedUpdateTip(self.lastTipHeight);
 
-        self.node.services.htmlcoind.on('tip', self._rapidProtectedUpdateTip.bind(self));
+        self.node.services.vipstarcoind.on('tip', self._rapidProtectedUpdateTip.bind(self));
 
         self.marketsService.on('updated', function () {
             return self.updateRicherThanCache(function (err) {
