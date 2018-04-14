@@ -1,7 +1,7 @@
 {
   "name": "vipstarcoin-api",
   "description": "A VIPSTARCOIN blockchain REST and web socket API service for VIPSTARCOINCORE Node.",
-  "version": "0.0.17",
+  "version": "0.0.23",
   "repository": "https://github.com/fkfk/vipstarcoin-api.git",
   "contributors": [],
   "bugs": {
