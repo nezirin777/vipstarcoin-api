@@ -998,6 +998,7 @@ StatisticService.prototype.getTotal = function(nextCb) {
 
 /**
  *
+ * TODO: not work for VIPSTARCOIN
  * @return {BigNumber} supply - BigNumber representation of total supply
  */
 StatisticService.prototype.getTotalSupply  = function() {
