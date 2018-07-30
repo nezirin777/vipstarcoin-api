@@ -562,7 +562,7 @@ StatisticService.prototype.updateOrCreateDay = function (date, data, next) {
                 dayBN.stake.sum = dayBN.stake.sum.plus(subsidy);
             }
 
-            dayBN.supply.sum = self.getTotalSupply()
+            dayBN.supply.sum = SupplyHelper.getTotalSupplyByHeight(block.height).mul(1e8);
 
         }
 
@@ -1002,7 +1002,11 @@ StatisticService.prototype.getTotal = function(nextCb) {
  * @return {BigNumber} supply - BigNumber representation of total supply
  */
 StatisticService.prototype.getTotalSupply  = function() {
-    return this.node.services.vipstarcoind.moneysupply;
+    var blockHeight = this.node.services.vipstarcoind.height;
+
+    var supply = (new BigNumber(100000000)).plus((blockHeight - 5000) * 4);
+
+    return supply;
 }
 
 module.exports = StatisticService;
