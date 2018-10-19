@@ -103,6 +103,12 @@ Erc20BalanceRepository.prototype.fetchBalancesByAddress = function (address, nex
     });
 };
 
+Erc20BalanceRepository.prototype.fetchBalancesByAddresses = function (addresses, next) {
+    return Erc20Balance.find({$or: [{address: {$in: addresses}}]}, {}, function(err, balances) {
+        return next(err, balances);
+    });
+};
+
 Erc20BalanceRepository.prototype.fetchBalanceByBaseAddressAndContract = function (address, contractBaseAddress, next) {
     return Erc20Balance.findOne({address: address, contract_address_base: contractBaseAddress}, {}, function(err, balances) {
         return next(err, balances);
