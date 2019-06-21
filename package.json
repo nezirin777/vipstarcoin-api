@@ -27,7 +27,7 @@
   "main": "lib",
   "vipstarcoincoreNode": "lib",
   "dependencies": {
-    "async": "*",
+    "async": "^2.6.1",
     "bignumber.js": "^4.0.2",
     "bitcore-lib": "^0.13.7",
     "bitcore-message": "^1.0.1",
