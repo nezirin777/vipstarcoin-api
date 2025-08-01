@@ -27,43 +27,9 @@ function MarketsService(options) {
 util.inherits(MarketsService, EventEmitter);
 
 MarketsService.prototype._updateInfo = function() {
-    var self = this;
-    return request.get({
-        url: 'https://api.coinmarketcap.com/v1/ticker/vipstar-coin/',
-        json: true
-    }, function (err, response, body) {
-
-        if (err) {
-            return self.common.log.error('Coinmarketcap error', err);
-        }
-
-        if (response.statusCode != 200) {
-            return self.common.log.error('Coinmarketcap error status code', response.statusCode);
-        }
-
-        if (body && _.isArray(body) && body.length) {
-            var needToTrigger = false;
-
-            ['price_usd', 'price_btc', 'market_cap_usd', 'available_supply'].forEach(function (param) {
-
-                if (self.info[param] !== body[0][param]) {
-                    self.info[param] = body[0][param];
-                    needToTrigger = true;
-                }
-
-            });
-
-            if (needToTrigger) {
-                self.emit('updated', self.info);
-            }
-
-            return self.info;
-        }
-
-        return self.common.log.error('Coinmarketcap error body', body);
-
-    });
-
+    // CoinMarketCap アクセス無効化
+    this.common.log.info('CoinMarketCap: アクセス無効化済み');
+    return;
 };
 
 MarketsService.prototype.getInfo = function(next) {
