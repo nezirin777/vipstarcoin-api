@@ -38,7 +38,6 @@
     "moment": "^2.19.3",
     "mongoose": "^4.11.8",
     "morgan": "^1.7.0",
-    "vipstarcoin-lib": "git://github.com/fkfk/vipstarcoin-lib.git#master",
     "request": "^2.83.0",
     "web3": "^0.18.4"
   },
@@ -48,5 +47,8 @@
     "proxyquire": "^1.7.2",
     "should": "^8.3.1",
     "sinon": "^1.10.3"
+  },
+  "peerDependencies": {
+    "vipstarcoin-lib": "*"
   }
 }
