@@ -14,14 +14,8 @@ function MarketsService(options) {
         market_cap_usd: 0
     };
 
-    this._updateInfo();
-
-    var self = this;
-
-    setInterval(function () {
-        self._updateInfo();
-    }, 90000);
-
+    // this._updateInfo(); ← 無効化
+    // setInterval(() => this._updateInfo(), 90000); ← 無効化
 }
 
 util.inherits(MarketsService, EventEmitter);
