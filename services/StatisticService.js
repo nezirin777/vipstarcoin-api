@@ -562,7 +562,7 @@ StatisticService.prototype.updateOrCreateDay = function (date, data, next) {
                 dayBN.stake.sum = dayBN.stake.sum.plus(subsidy);
             }
 
-            dayBN.supply.sum = SupplyHelper.getTotalSupplyByHeight(block.height).mul(1e8);
+            dayBN.supply.sum = SupplyHelper.getTotalSupplyByHeight(block.height).times(1e8);
 
         }
 

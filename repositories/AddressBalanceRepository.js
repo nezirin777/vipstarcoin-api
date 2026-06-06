@@ -55,4 +55,10 @@ AddressBalanceRepository.prototype.getCountRicherThan = function (next) {
     });
 };
 
+AddressBalanceRepository.prototype.getBalanceByAddress = function (address, next) {
+  return AddressBalance.findOne({ address: address }, function (err, row) {
+    return next(err, row ? row.balance : 0);
+  });
+};
+
 module.exports = AddressBalanceRepository;

@@ -14,7 +14,7 @@ Db.prototype.connect = function (cb) {
         userUrl = (configDB['user']) ? (configDB['user'] + ':' + configDB['password'] + '@') : '',
         url = 'mongodb://' + userUrl + configDB['host'] + ':' + configDB['port'] + '/' + configDB['database'];
 
-    return mongoose.connect(url, { useMongoClient: true }, function (err) {
+    return mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err) {
 
         if (err) {
             self.common.log.error('[DB] ', err);
@@ -30,4 +30,3 @@ Db.prototype.connect = function (cb) {
 };
 
 module.exports = Db;
-

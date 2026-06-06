@@ -158,7 +158,7 @@ AddressBalanceService.prototype.updateCacheIntervals = function (next) {
                 sum: 0
             });
 
-            while (balance.greaterThanOrEqualTo(nextBorder)) {
+            while (balance.isGreaterThanOrEqualTo(nextBorder)) {
 
                 prevBorder = nextBorder;
                 nextBorder = nextBorder * 10;
@@ -447,114 +447,101 @@ AddressBalanceService.prototype._rapidProtectedUpdateTip = function(height) {
  */
 AddressBalanceService.prototype.processBlock = function (blockHeight, next) {
 
-    var self = this;
+  var self = this;
+  var BigNumber = require('bignumber.js');
 
-    return self.node.getBlockOverview(blockHeight, function (err, block) {
+  return self.node.getBlockOverview(blockHeight, function (err, block) {
+
+    if (err) {
+      return next(err);
+    }
+
+    // アドレスごとの残高変化量（satoshi）を集計する
+    var balanceDeltas = {};
+
+    return async.eachSeries(block.txids, function (txHash, callback) {
+
+      return self.node.getDetailedTransaction(txHash, function (err, transaction) {
 
         if (err) {
-            return next(err);
+          // tx 取得エラーはスキップして継続
+          self.common.log.warn('[AddressBalanceService] tx skip:', txHash, err.message || err);
+          return callback();
         }
 
-        var addressesMap = {};
-
-        return async.waterfall([function (callback) {
-            return async.eachSeries(block.txids, function (txHash, callback) {
-
-                return self.node.getJsonRawTransaction(txHash, function (err, transaction) {
-
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    if (transaction.vin) {
-                        transaction.vin.forEach(function(vin) {
-                            if (vin.address && !addressesMap[vin.address]) {
-                                addressesMap[vin.address] = vin.address;
-                            }
-                        });
-                    }
-
-                    if (transaction.vout) {
-                        transaction.vout.forEach(function(vout) {
-                            if (vout.scriptPubKey && vout.scriptPubKey.addresses && vout.scriptPubKey.addresses.length) {
-                                vout.scriptPubKey.addresses.forEach(function(address) {
-                                    if (!addressesMap[address]) {
-                                        addressesMap[address] = address;
-                                    }
-                                });
-                            }
-                        });
-
-                    }
-
-                    return callback();
-                });
-
-            }, function (err) {
-                return callback(err);
-            });
-        }, function (callback) {
-
-            var addresses = Object.keys(addressesMap);
-
-            if (!addresses.length) {
-                return callback();
+        // vout: 受信 → 残高増加
+        if (transaction.outputs) {
+          transaction.outputs.forEach(function (output) {
+            if (output.address && output.satoshis > 0) {
+              balanceDeltas[output.address] = (balanceDeltas[output.address] || 0) + output.satoshis;
             }
+          });
+        }
 
-            return async.eachSeries(addresses, function (address, callback) {
-
-                var dataFlow = {
-                    balance: 0
-                };
-
-                return async.waterfall([function (callback) {
-                    return self.node.getAddressBalance(address, {}, function (err, result) {
-
-                        if (err) {
-                            return callback(err)
-                        }
-
-                        var balanceSat = new BigNumber(String(result.balance));
-                        dataFlow.balance = balanceSat.dividedBy(1e8).toNumber();
-
-                        return callback();
-
-                    });
-                }, function (callback) {
-
-                    if (dataFlow.balance > 0) {
-                        return self.addressBalanceRepository.createOrUpdateBalance({
-                            address: address,
-                            balance: dataFlow.balance
-                        }, function (err, res) {
-                            return callback(err, res);
-                        });
-                    } else {
-                        return self.addressBalanceRepository.removeBalanceByAddress(address, function (err, res) {
-                            return callback(err, res);
-                        });
-                    }
-
-                }], function (err) {
-                    return callback(err);
-                });
-
-            }, function (err) {
-                return callback(err);
-            })
-        }], function (err) {
-
-            if (err) {
-                return next(err);
+        // vin: 送信 → 残高減少（コインベース除く）
+        if (!transaction.coinbase && transaction.inputs) {
+          transaction.inputs.forEach(function (input) {
+            if (input.address && input.satoshis > 0) {
+              balanceDeltas[input.address] = (balanceDeltas[input.address] || 0) - input.satoshis;
             }
+          });
+        }
 
-            return self.lastBlockRepository.updateOrAddLastBlock(block.height, TYPE, function (err) {
-                return next(err);
+        return callback();
+      });
+
+    }, function (err) {
+
+      if (err) {
+        self.common.log.error('[AddressBalanceService] block scan error', err);
+        return next(err);
+      }
+
+      var addresses = Object.keys(balanceDeltas);
+
+      if (!addresses.length) {
+        return self.lastBlockRepository.updateOrAddLastBlock(blockHeight, TYPE, next);
+      }
+
+      return async.eachSeries(addresses, function (address, callback) {
+
+        var deltaSat = balanceDeltas[address];
+        var deltaVips = new BigNumber(String(deltaSat)).dividedBy(1e8).toNumber();
+
+        return self.addressBalanceRepository.getBalanceByAddress(address, function (err, currentVips) {
+
+          if (err) return callback(err);
+
+          var newBalance = (currentVips || 0) + deltaVips;
+
+          if (newBalance > 0.000001) {
+            return self.addressBalanceRepository.createOrUpdateBalance({
+              address: address,
+              balance: newBalance
+            }, function (err) {
+              return callback(err);
             });
+          } else {
+            return self.addressBalanceRepository.removeBalanceByAddress(address, function (err) {
+              return callback(err);
+            });
+          }
 
         });
 
+      }, function (err) {
+
+        if (err) return next(err);
+
+        return self.lastBlockRepository.updateOrAddLastBlock(blockHeight, TYPE, function (err) {
+          return next(err);
+        });
+
+      });
+
     });
+
+  });
 
 };
 
