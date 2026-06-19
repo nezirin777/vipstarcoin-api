@@ -46,7 +46,8 @@ var config = {
 var log = {
   info: function () { console.log('[INFO]', ...arguments); },
   warn: function () { console.warn('[WARN]', ...arguments); },
-  error: function () { console.error('[ERROR]', ...arguments); }
+  error: function () { console.error('[ERROR]', ...arguments); },
+  debug: function () { /* suppress */ }
 };
 
 // ─── VipstarcoindNode（RPC シム） ──────────────────────────────
